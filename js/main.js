@@ -23,15 +23,12 @@ mobileMenu.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Карусель технологий
+// Бесконечная лента технологий — дублируем карточки для бесшовного цикла
 const techTrack = document.getElementById('techTrack');
-const techPrev  = document.getElementById('techPrev');
-const techNext  = document.getElementById('techNext');
-
-if (techTrack && techPrev && techNext) {
-    const step = 220;
-    techPrev.addEventListener('click', () => techTrack.scrollBy({ left: -step, behavior: 'smooth' }));
-    techNext.addEventListener('click', () => techTrack.scrollBy({ left:  step, behavior: 'smooth' }));
+if (techTrack) {
+    Array.from(techTrack.children).forEach(item => {
+        techTrack.appendChild(item.cloneNode(true));
+    });
 }
 
 // Кнопка "Наверх" — показывать после 400px скролла
