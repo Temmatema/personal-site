@@ -1837,3 +1837,20 @@ button.service-link {
     .nav { height: 64px; }
     .hero { padding: 76px 0 32px; }
 }
+
+/* ========== TABLET (769–1180px) — отдельные отступы ========== */
+@media (min-width: 769px) and (max-width: 1180px) {
+    .container { padding: 0 40px; }
+
+    .hero {
+        min-height: auto;
+        padding: 88px 0 56px;
+    }
+    .hero-inner { gap: 32px; }
+
+    .about    { padding: 56px 0; }
+    .services { padding: 64px 0; }
+    .tech     { padding: 56px 0; }
+    .why      { padding: 56px 0; }
+    .contacts { padding: 56px 0 40px; }
+}
