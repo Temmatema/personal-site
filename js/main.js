@@ -98,12 +98,40 @@ if (bgOrbs.length && !reduceMotion) {
     updateOrbs();
 }
 
-// Бесконечная лента технологий — дублируем карточки для бесшовного цикла
+// Бесконечная лента технологий — JS-driven marquee (правильный hit-testing при hover)
 const techTrack = document.getElementById('techTrack');
 if (techTrack) {
+    // 1) Дублируем карточки для бесшовного цикла
     Array.from(techTrack.children).forEach(item => {
         techTrack.appendChild(item.cloneNode(true));
     });
+
+    // 2) JS-анимация через requestAnimationFrame
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const SPEED_PX_PER_SEC = 40; // скорость прокрутки
+        let offset = 0;
+        let lastTime = performance.now();
+        let halfWidth = 0;
+
+        // Пересчитываем halfWidth после загрузки изображений (иконки)
+        const recalc = () => { halfWidth = techTrack.scrollWidth / 2; };
+        recalc();
+        window.addEventListener('load', recalc);
+        window.addEventListener('resize', recalc);
+
+        function tick(now) {
+            const dt = Math.min((now - lastTime) / 1000, 0.05); // защита от больших скачков
+            lastTime = now;
+
+            if (halfWidth > 0) {
+                offset += SPEED_PX_PER_SEC * dt;
+                if (offset >= halfWidth) offset -= halfWidth;
+                techTrack.style.transform = `translate3d(${-offset}px, 0, 0)`;
+            }
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
 }
 
 // ============== Contact form → Telegram ==============
@@ -318,14 +346,12 @@ function openTechModal(item) {
     techModal.classList.add('is-open');
     techModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    if (techTrack) techTrack.style.animationPlayState = 'paused';
 }
 
 function closeTechModal() {
     techModal.classList.remove('is-open');
     techModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    if (techTrack) techTrack.style.animationPlayState = '';
 }
 
 if (techTrack && techModal) {
