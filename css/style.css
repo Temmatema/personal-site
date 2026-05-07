@@ -1699,21 +1699,57 @@ button.service-link {
     .contacts-cards { justify-content: center; }
 }
 
-@media (max-width: 600px) {
-    .services-grid,
-    .portfolio-grid,
-    .why-grid { grid-template-columns: 1fr; }
-
-    .footer-inner   { justify-content: center; text-align: center; }
-    .contact-btn    { width: 100%; justify-content: center; }
-    .contact-card   { width: 100%; }
-}
-
 @media (max-width: 768px) {
     .nav-links { display: none; }
     .nav-btn   { display: none; }
     .burger    { display: block; }
-    .hero      { padding: 96px 0 56px; }
+
+    .container { padding: 0 18px; }
+
+    .nav        { height: 70px; gap: 6px; }
+    .logo-img   { height: 44px; }
+
+    .hero { padding: 96px 0 56px; min-height: auto; }
+    .hero-content { gap: 22px; }
+    .hero-title { letter-spacing: -0.6px; }
+    .hero-desc  { font-size: 15px; }
+    .hero-desc br { display: none; }
+    .hero-title br { display: none; }
+
+    .about       { padding: 48px 0; }
+    .services    { padding: 56px 0; }
+    .tech        { padding: 48px 0; }
+    .why         { padding: 48px 0; }
+    .contacts    { padding: 48px 0 32px; }
+
+    .section-label { font-size: 18px; }
+    .section-label--top { margin-bottom: 24px; }
+
+    .about-title { font-size: clamp(20px, 4.5vw, 26px); }
+    .about-title br { display: none; }
+    .about-features { gap: 18px 22px; }
+    .feature { font-size: 13px; }
+    .feature span br { display: none; }
+
+    .service-card { padding: 26px 22px; }
+    .why-card     { padding: 24px 20px; }
+
+    .tech-item { width: 90px; padding: 16px 10px; }
+    .tech-logo { width: 42px; height: 42px; }
+
+    /* Уменьшаем background-orbs на мобильных, чтобы не "размазывали" фон */
+    .bg-orb--1 { width: 320px; height: 320px; }
+    .bg-orb--2 { width: 360px; height: 360px; }
+    .bg-orb--3 { width: 280px; height: 280px; }
+    .bg-orb--4 { width: 260px; height: 260px; }
+    .bg-orb--5 { width: 220px; height: 220px; }
+    .bg-orb__core { filter: blur(80px); }
+
+    .glow--purple { width: 420px; height: 420px; }
+    .glow--blue   { width: 280px; height: 280px; right: 20px; }
+
+    .photo-frame  { width: 70%; }
+    .photo-badge  { width: 44px; height: 44px; bottom: -10px; right: -10px; }
 }
 
 /* Мобильное меню — рендерится только на мобильных (на десктопе скрываем полностью) */
@@ -1721,17 +1757,83 @@ button.service-link {
     .mobile-menu { display: none !important; }
 }
 
+@media (max-width: 600px) {
+    .services-grid,
+    .portfolio-grid,
+    .why-grid { grid-template-columns: 1fr; }
+
+    .footer-inner   { justify-content: center; text-align: center; }
+    .contact-btn    { width: 100%; justify-content: center; height: auto; padding: 14px 24px; }
+    .contact-card   { width: 100%; min-width: 0; }
+
+    .hero-title { font-size: clamp(28px, 8vw, 40px); }
+    .hero-stats { padding: 16px 18px; }
+    .stat-val   { font-size: 19px; }
+
+    .nav-link { font-size: 15px; }
+
+    /* Modals — лучше адаптируем под маленькие экраны */
+    .service-modal { padding: 14px; }
+    .tech-modal    { padding: 14px; }
+    .service-modal__card { padding: 28px 20px 22px; max-height: 88vh; }
+    .tech-modal__card    { padding: 30px 20px 22px; }
+    .service-modal__title { font-size: 20px; }
+    .tech-modal__title    { font-size: 19px; }
+    .service-modal__list li { font-size: 13px; }
+}
+
 @media (max-width: 540px) {
+    .container { padding: 0 16px; }
+
     .hero-stats {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+        align-items: stretch;
+        gap: 14px;
     }
+    .stat-item { width: 100%; }
     .stat-divider {
         width: 100%;
         height: 1px;
         margin: 0;
     }
-    .hero-btns { flex-direction: column; width: 100%; }
+    .hero-btns { flex-direction: column; width: 100%; align-items: stretch; }
     .btn       { width: 100%; justify-content: center; }
+
+    .hero-badge { font-size: 13px; padding: 7px 14px; }
+    .hero-desc  { font-size: 14.5px; line-height: 1.65; }
+
+    .about-features { gap: 14px 18px; }
+    .feature        { font-size: 12.5px; }
+    .feature-icon   { width: 38px; height: 38px; }
+
+    /* Карусель технологий — компактнее */
+    .tech-item { width: 84px; padding: 14px 8px; gap: 8px; }
+    .tech-logo { width: 38px; height: 38px; }
+    .tech-item span { font-size: 11.5px; }
+
+    .visual-wrap { max-width: 320px; }
+
+    .photo-frame { width: 80%; }
+
+    .footer-copy   { font-size: 12px; }
+
+    .back-top {
+        right: 14px;
+        bottom: 14px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .mobile-menu.open { padding: 14px 16px 20px; }
+
+    .hero { padding: 84px 0 40px; }
+}
+
+@media (max-width: 380px) {
+    .hero-title { font-size: 26px; letter-spacing: -0.4px; }
+    .about-title { font-size: 19px; }
+    .section-label { font-size: 16px; }
+    .logo-img { height: 38px; }
+    .nav { height: 64px; }
+    .hero { padding: 76px 0 32px; }
 }
