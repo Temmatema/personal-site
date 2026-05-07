@@ -106,6 +106,101 @@ if (techTrack) {
     });
 }
 
+// ============== Contact form → Telegram ==============
+const TELEGRAM_BOT_TOKEN = '8213394012:AAGJL7oFppW1ct7Fxad7lE-W9vCw8usrFwA';
+const TELEGRAM_CHAT_ID   = '429539553';
+
+const contactModal      = document.getElementById('contactModal');
+const openContactBtn    = document.getElementById('openContactForm');
+const contactForm       = document.getElementById('contactForm');
+const contactFormStatus = document.getElementById('contactFormStatus');
+
+function openContactModal() {
+    contactModal.classList.add('is-open');
+    contactModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => contactForm?.querySelector('input')?.focus(), 250);
+}
+function closeContactModal() {
+    contactModal.classList.remove('is-open');
+    contactModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+if (openContactBtn) openContactBtn.addEventListener('click', openContactModal);
+
+if (contactModal) {
+    contactModal.addEventListener('click', (e) => {
+        if (e.target.matches('[data-close]') || e.target.closest('[data-close]')) {
+            closeContactModal();
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contactModal.classList.contains('is-open')) closeContactModal();
+    });
+}
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
+        }
+
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const submitText = submitBtn.querySelector('.contact-form__submit-text');
+        const data = Object.fromEntries(new FormData(contactForm).entries());
+
+        // Экранируем спецсимволы Markdown V2
+        const escape = (s) => String(s).replace(/[_*[\]()~`>#+=|{}.!\\-]/g, (m) => '\\' + m);
+
+        const text =
+            '*🔔 Новая заявка с сайта*\n\n' +
+            `*Имя:* ${escape(data.name)}\n` +
+            `*Контакт:* ${escape(data.contact)}\n` +
+            `*Сообщение:*\n${escape(data.message)}`;
+
+        // UI: ставим кнопку в режим загрузки
+        submitBtn.disabled = true;
+        submitText.textContent = 'Отправка...';
+        contactFormStatus.className = 'contact-form__status';
+        contactFormStatus.textContent = '';
+
+        try {
+            const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text,
+                    parse_mode: 'MarkdownV2',
+                }),
+            });
+            const json = await res.json();
+            if (!res.ok || !json.ok) throw new Error(json.description || 'Ошибка отправки');
+
+            contactFormStatus.className = 'contact-form__status is-success';
+            contactFormStatus.textContent = '✓ Сообщение отправлено! Свяжусь с вами скоро.';
+            contactForm.reset();
+            submitText.textContent = 'Отправлено';
+            setTimeout(() => {
+                closeContactModal();
+                submitText.textContent = 'Отправить';
+                submitBtn.disabled = false;
+                contactFormStatus.textContent = '';
+                contactFormStatus.className = 'contact-form__status';
+            }, 2200);
+        } catch (err) {
+            console.error(err);
+            contactFormStatus.className = 'contact-form__status is-error';
+            contactFormStatus.textContent = 'Не удалось отправить. Попробуйте написать в Telegram напрямую.';
+            submitText.textContent = 'Отправить';
+            submitBtn.disabled = false;
+        }
+    });
+}
+
 // Модалка услуг
 const SERVICES_DATA = {
     websites: {

@@ -430,10 +430,10 @@
                         </div>
                     </a>
 
-                    <a href="#" class="btn btn--primary contact-btn">
+                    <button type="button" class="btn btn--primary contact-btn" id="openContactForm">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Написать
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -453,6 +453,43 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
         </a>
     </footer>
+
+    <!-- ========== CONTACT MODAL ========== -->
+    <div class="contact-modal" id="contactModal" aria-hidden="true" role="dialog" aria-labelledby="contactModalTitle">
+        <div class="contact-modal__backdrop" data-close></div>
+        <div class="contact-modal__card" role="document">
+            <button class="contact-modal__close" data-close aria-label="Закрыть">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <h3 class="contact-modal__title" id="contactModalTitle">Связаться со мной</h3>
+            <p class="contact-modal__subtitle">Опиши задачу — отвечу в течение нескольких часов</p>
+
+            <form class="contact-form" id="contactForm" novalidate>
+                <label class="contact-form__field">
+                    <span class="contact-form__label">Имя</span>
+                    <input type="text" name="name" required minlength="2" placeholder="Как к вам обращаться?">
+                </label>
+
+                <label class="contact-form__field">
+                    <span class="contact-form__label">Контакт для связи</span>
+                    <input type="text" name="contact" required minlength="3" placeholder="Telegram, email или телефон">
+                </label>
+
+                <label class="contact-form__field">
+                    <span class="contact-form__label">Сообщение</span>
+                    <textarea name="message" rows="4" required minlength="10" placeholder="Кратко опишите задачу или проект"></textarea>
+                </label>
+
+                <button type="submit" class="btn btn--primary contact-form__submit">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    <span class="contact-form__submit-text">Отправить</span>
+                </button>
+
+                <div class="contact-form__status" id="contactFormStatus" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
 
     <!-- ========== SERVICE MODAL ========== -->
     <div class="service-modal" id="serviceModal" aria-hidden="true" role="dialog" aria-labelledby="serviceModalTitle">
